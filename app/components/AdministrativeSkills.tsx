@@ -1,0 +1,67 @@
+import { motion } from 'motion/react';
+import {
+    FileText,
+    Table,
+    Mail,
+    Database,
+    Search,
+    Calendar,
+    FolderOpen,
+    FileEdit
+} from 'lucide-react';
+
+const skills = [
+    { name: 'Microsoft Word', icon: FileText },
+    { name: 'Excel', icon: Table },
+    { name: 'Google Sheets', icon: Table },
+    { name: 'Google Docs', icon: FileText },
+    { name: 'Email Management', icon: Mail },
+    { name: 'Data Entry', icon: Database },
+    { name: 'Internet Research', icon: Search },
+    { name: 'Calendar Management', icon: Calendar },
+    { name: 'File Organization', icon: FolderOpen },
+    { name: 'Document Formatting', icon: FileEdit }
+];
+
+export function AdministrativeSkills() {
+    return (
+        <section className="py-24 px-4 bg-accent/50">
+            <div className="max-w-7xl mx-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="text-center mb-16"
+                >
+                    <h2 className="font-serif text-4xl md:text-5xl text-foreground mb-4">
+                        Administrative Skills
+                    </h2>
+                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                        Comprehensive administrative expertise to support your business operations
+                    </p>
+                </motion.div>
+
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                    {skills.map((skill, index) => (
+                        <motion.div
+                            key={skill.name}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: index * 0.05 }}
+                            className="group"
+                        >
+                            <div className="bg-card rounded-xl p-6 text-center shadow-sm hover:shadow-lg transition-all duration-300 border border-border hover:border-primary/30">
+                                <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                    <skill.icon className="w-6 h-6 text-primary" />
+                                </div>
+                                <p className="text-sm text-foreground">{skill.name}</p>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
