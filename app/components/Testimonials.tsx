@@ -8,7 +8,9 @@ const testimonials = [
         company: 'TechStart Inc.',
         rating: 5,
         text: 'Fiona transformed our social media presence with her incredible Canva designs. Her attention to detail and quick turnaround time exceeded our expectations.',
-        avatar: 'SJ'
+        avatar: 'SJ',
+        color: 'from-primary/25 via-emerald-100 to-white text-primary shadow-primary/20 ring-primary/30',
+        avatarColor: 'from-rose-500 to-amber-400'
     },
     {
         name: 'Michael Chen',
@@ -16,7 +18,9 @@ const testimonials = [
         company: 'GrowthHub',
         rating: 5,
         text: 'Working with Fiona has been a game-changer for our team. Her administrative support and AI-powered workflows have significantly improved our productivity.',
-        avatar: 'MC'
+        avatar: 'MC',
+        color: 'from-secondary/30 via-rose-100 to-white text-secondary shadow-secondary/20 ring-secondary/30',
+        avatarColor: 'from-sky-500 to-emerald-400'
     },
     {
         name: 'Emily Rodriguez',
@@ -24,7 +28,9 @@ const testimonials = [
         company: 'Bloom & Co.',
         rating: 5,
         text: 'Fiona is professional, reliable, and incredibly talented. She helped us create stunning presentations and manage our day-to-day operations seamlessly.',
-        avatar: 'ER'
+        avatar: 'ER',
+        color: 'from-sky-200 via-cyan-100 to-white text-sky-700 shadow-sky-200/60 ring-sky-200/60',
+        avatarColor: 'from-violet-500 to-fuchsia-400'
     }
 ];
 
@@ -57,21 +63,23 @@ export function Testimonials() {
                             transition={{ duration: 0.6, delay: index * 0.1 }}
                             className="group"
                         >
-                            <div className="h-full bg-card rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-border relative">
-                                <Quote className="w-10 h-10 text-primary/20 absolute top-6 right-6" />
+                            <div className="h-full bg-card rounded-2xl p-8 shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/30 relative">
+                                <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${testimonial.color} shadow-md ring-1 flex items-center justify-center absolute top-6 right-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}>
+                                    <Quote className="w-4 h-4 drop-shadow-sm" strokeWidth={2.2} />
+                                </div>
 
                                 <div className="flex gap-1 mb-4">
                                     {[...Array(testimonial.rating)].map((_, i) => (
-                                        <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                                        <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400 drop-shadow-sm" />
                                     ))}
                                 </div>
 
                                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                                    "{testimonial.text}"
+                                    &ldquo;{testimonial.text}&rdquo;
                                 </p>
 
                                 <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white">
+                                    <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${testimonial.avatarColor} shadow-md flex items-center justify-center text-white ring-2 ring-white/80`}>
                                         {testimonial.avatar}
                                     </div>
                                     <div>

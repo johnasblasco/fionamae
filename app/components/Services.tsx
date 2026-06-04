@@ -18,7 +18,7 @@ const services = [
             'Brand customization',
             'Social media content formatting'
         ],
-        color: 'from-primary/20 to-primary/5'
+        color: 'from-primary/25 via-emerald-100 to-white text-primary shadow-primary/20 ring-primary/30'
     },
     {
         icon: Share2,
@@ -31,7 +31,7 @@ const services = [
             'Product advertisements',
             'Quote graphics'
         ],
-        color: 'from-secondary/20 to-secondary/5'
+        color: 'from-secondary/30 via-rose-100 to-white text-secondary shadow-secondary/20 ring-secondary/30'
     },
     {
         icon: Presentation,
@@ -43,7 +43,7 @@ const services = [
             'Pitch decks',
             'Company profiles'
         ],
-        color: 'from-primary/20 to-primary/5'
+        color: 'from-sky-200 via-cyan-100 to-white text-sky-700 shadow-sky-200/60 ring-sky-200/60'
     },
     {
         icon: Briefcase,
@@ -56,7 +56,7 @@ const services = [
             'Calendar management',
             'File organization'
         ],
-        color: 'from-secondary/20 to-secondary/5'
+        color: 'from-amber-200 via-orange-100 to-white text-amber-700 shadow-amber-200/60 ring-amber-200/60'
     },
     {
         icon: Sparkles,
@@ -70,7 +70,7 @@ const services = [
             'Content generation',
             'Workflow automation'
         ],
-        color: 'from-primary/20 to-primary/5'
+        color: 'from-primary/25 via-emerald-100 to-white text-primary shadow-primary/20 ring-primary/30'
     }
 ];
 
@@ -103,9 +103,9 @@ export function Services() {
                             transition={{ duration: 0.6, delay: index * 0.1 }}
                             className="group"
                         >
-                            <div className="h-full bg-card rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/30">
-                                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                                    <service.icon className="w-7 h-7 text-primary" />
+                            <div className="h-full bg-card rounded-2xl p-8 shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/30">
+                                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${service.color} shadow-lg ring-1 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}>
+                                    <service.icon className="w-7 h-7 drop-shadow-sm" strokeWidth={2.2} />
                                 </div>
 
                                 <h3 className="text-xl mb-3 text-foreground">

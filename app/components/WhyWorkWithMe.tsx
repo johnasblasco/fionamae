@@ -14,42 +14,50 @@ const reasons = [
     {
         icon: Target,
         title: 'Detail-Oriented',
-        description: 'Meticulous attention to every aspect of your projects'
+        description: 'Meticulous attention to every aspect of your projects',
+        color: 'from-primary/25 via-emerald-100 to-white text-primary shadow-primary/20 ring-primary/30'
     },
     {
         icon: Zap,
         title: 'Fast Learner',
-        description: 'Quick to adapt to new tools, systems, and processes'
+        description: 'Quick to adapt to new tools, systems, and processes',
+        color: 'from-secondary/30 via-rose-100 to-white text-secondary shadow-secondary/20 ring-secondary/30'
     },
     {
         icon: Shield,
         title: 'Reliable & Organized',
-        description: 'Consistent delivery with systematic approach'
+        description: 'Consistent delivery with systematic approach',
+        color: 'from-sky-200 via-cyan-100 to-white text-sky-700 shadow-sky-200/60 ring-sky-200/60'
     },
     {
         icon: MessageCircle,
         title: 'Strong Communication',
-        description: 'Clear and responsive throughout collaboration'
+        description: 'Clear and responsive throughout collaboration',
+        color: 'from-amber-200 via-orange-100 to-white text-amber-700 shadow-amber-200/60 ring-amber-200/60'
     },
     {
         icon: Palette,
         title: 'Canva Proficient',
-        description: 'Expert in creating stunning visual content'
+        description: 'Expert in creating stunning visual content',
+        color: 'from-primary/25 via-emerald-100 to-white text-primary shadow-primary/20 ring-primary/30'
     },
     {
         icon: Sparkles,
         title: 'AI Tool Proficient',
-        description: 'Leveraging AI for enhanced productivity'
+        description: 'Leveraging AI for enhanced productivity',
+        color: 'from-secondary/30 via-rose-100 to-white text-secondary shadow-secondary/20 ring-secondary/30'
     },
     {
         icon: Repeat,
         title: 'Adaptable',
-        description: 'Flexible to changing requirements and priorities'
+        description: 'Flexible to changing requirements and priorities',
+        color: 'from-sky-200 via-cyan-100 to-white text-sky-700 shadow-sky-200/60 ring-sky-200/60'
     },
     {
         icon: Clock,
         title: 'Deadline Driven',
-        description: 'Committed to timely project completion'
+        description: 'Committed to timely project completion',
+        color: 'from-amber-200 via-orange-100 to-white text-amber-700 shadow-amber-200/60 ring-amber-200/60'
     }
 ];
 
@@ -83,9 +91,9 @@ export function WhyWorkWithMe() {
                             transition={{ duration: 0.6, delay: index * 0.1 }}
                             className="group"
                         >
-                            <div className="h-full bg-card rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/30 text-center">
-                                <div className="w-14 h-14 mx-auto rounded-xl bg-gradient-to-br from-primary/20 to-secondary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                                    <reason.icon className="w-7 h-7 text-primary" />
+                            <div className="h-full bg-card rounded-2xl p-6 shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/30 text-center">
+                                <div className={`w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br ${reason.color} shadow-lg ring-1 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}>
+                                    <reason.icon className="w-7 h-7 drop-shadow-sm" strokeWidth={2.2} />
                                 </div>
 
                                 <h3 className="text-lg mb-2 text-foreground">

@@ -1,6 +1,24 @@
 import { motion } from 'motion/react';
-import { ArrowRight, Mail } from 'lucide-react';
+import { ArrowRight, ClipboardCheck, Mail, Palette, Sparkles } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+
+const heroHighlights = [
+    {
+        label: 'Admin Support',
+        icon: ClipboardCheck,
+        color: 'from-primary/25 via-emerald-100 to-white text-primary shadow-primary/20 ring-primary/30'
+    },
+    {
+        label: 'Canva Design',
+        icon: Palette,
+        color: 'from-secondary/30 via-rose-100 to-white text-secondary shadow-secondary/20 ring-secondary/30'
+    },
+    {
+        label: 'AI Workflows',
+        icon: Sparkles,
+        color: 'from-sky-200 via-cyan-100 to-white text-sky-700 shadow-sky-200/60 ring-sky-200/60'
+    }
+];
 
 export function Hero() {
     const scrollToSection = (id: string) => {
@@ -38,6 +56,20 @@ export function Hero() {
                             I help businesses stay organized, productive, and visually engaging through
                             administrative support, Canva design, and AI-powered workflows.
                         </p>
+
+                        <div className="grid sm:grid-cols-3 gap-3 pt-2">
+                            {heroHighlights.map((highlight) => (
+                                <div
+                                    key={highlight.label}
+                                    className="group flex items-center gap-3 rounded-xl border border-border bg-card p-3 shadow-sm hover:-translate-y-1 hover:shadow-lg hover:border-primary/30 transition-all duration-300"
+                                >
+                                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${highlight.color} shadow-md ring-1 flex shrink-0 items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}>
+                                        <highlight.icon className="w-5 h-5 drop-shadow-sm" strokeWidth={2.2} />
+                                    </div>
+                                    <span className="text-sm text-foreground">{highlight.label}</span>
+                                </div>
+                            ))}
+                        </div>
 
                         <div className="flex flex-wrap gap-4 pt-4">
                             <button

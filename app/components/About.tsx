@@ -1,5 +1,33 @@
 import { motion } from 'motion/react';
+import { Award, BriefcaseBusiness, HeartHandshake, UsersRound } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+
+const stats = [
+    {
+        value: '5+',
+        label: 'Years Experience',
+        icon: Award,
+        color: 'from-primary/25 via-emerald-100 to-white text-primary shadow-primary/20 ring-primary/30'
+    },
+    {
+        value: '100+',
+        label: 'Projects Completed',
+        icon: BriefcaseBusiness,
+        color: 'from-secondary/30 via-rose-100 to-white text-secondary shadow-secondary/20 ring-secondary/30'
+    },
+    {
+        value: '50+',
+        label: 'Happy Clients',
+        icon: UsersRound,
+        color: 'from-sky-200 via-cyan-100 to-white text-sky-700 shadow-sky-200/60 ring-sky-200/60'
+    },
+    {
+        value: '98%',
+        label: 'Client Satisfaction',
+        icon: HeartHandshake,
+        color: 'from-amber-200 via-orange-100 to-white text-amber-700 shadow-amber-200/60 ring-amber-200/60'
+    }
+];
 
 export function About() {
     return (
@@ -15,7 +43,7 @@ export function About() {
                     >
                         <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-accent">
                             <ImageWithFallback
-                                src="https://images.unsplash.com/photo-1770626894265-bdb99db109f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwyfHxwcm9mZXNzaW9uYWwlMjB3b21hbiUyMHdvcmtzcGFjZSUyMGVsZWdhbnR8ZW58MXx8fHwxNzgwNDU3Njg1fDA&ixlib=rb-4.1.0&q=80&w=1080"
+                                src="/about.jpg"
                                 alt="About Fiona Mae Santos"
                                 className="w-full h-full object-cover"
                             />
@@ -46,22 +74,18 @@ export function About() {
                         </div>
 
                         <div className="grid grid-cols-2 gap-4 pt-6">
-                            <div className="bg-card rounded-xl p-4 border border-border">
-                                <div className="text-3xl text-primary mb-2">5+</div>
-                                <div className="text-sm text-muted-foreground">Years Experience</div>
-                            </div>
-                            <div className="bg-card rounded-xl p-4 border border-border">
-                                <div className="text-3xl text-secondary mb-2">100+</div>
-                                <div className="text-sm text-muted-foreground">Projects Completed</div>
-                            </div>
-                            <div className="bg-card rounded-xl p-4 border border-border">
-                                <div className="text-3xl text-primary mb-2">50+</div>
-                                <div className="text-sm text-muted-foreground">Happy Clients</div>
-                            </div>
-                            <div className="bg-card rounded-xl p-4 border border-border">
-                                <div className="text-3xl text-secondary mb-2">98%</div>
-                                <div className="text-sm text-muted-foreground">Client Satisfaction</div>
-                            </div>
+                            {stats.map((stat) => (
+                                <div
+                                    key={stat.label}
+                                    className="group bg-card rounded-xl p-4 border border-border shadow-sm hover:-translate-y-1 hover:shadow-lg hover:border-primary/30 transition-all duration-300"
+                                >
+                                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} shadow-lg ring-1 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                                        <stat.icon className="w-6 h-6" strokeWidth={2.2} />
+                                    </div>
+                                    <div className="text-3xl text-foreground mb-1">{stat.value}</div>
+                                    <div className="text-sm text-muted-foreground">{stat.label}</div>
+                                </div>
+                            ))}
                         </div>
                     </motion.div>
                 </div>

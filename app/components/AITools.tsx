@@ -5,25 +5,25 @@ const aiTools = [
     {
         name: 'ChatGPT',
         icon: MessageSquare,
-        color: 'from-primary/20 to-primary/5',
+        color: 'from-primary/25 via-emerald-100 to-white text-primary shadow-primary/20 ring-primary/30',
         tasks: ['Writing captions', 'Drafting emails', 'Content generation', 'Research assistance']
     },
     {
         name: 'Gemini',
         icon: Sparkles,
-        color: 'from-secondary/20 to-secondary/5',
+        color: 'from-secondary/30 via-rose-100 to-white text-secondary shadow-secondary/20 ring-secondary/30',
         tasks: ['Generating content ideas', 'Summarizing information', 'Brainstorming']
     },
     {
         name: 'Canva AI',
         icon: Bot,
-        color: 'from-primary/20 to-primary/5',
+        color: 'from-sky-200 via-cyan-100 to-white text-sky-700 shadow-sky-200/60 ring-sky-200/60',
         tasks: ['Design suggestions', 'Background removal', 'Smart templates', 'Auto-resize']
     },
     {
         name: 'Grammarly',
         icon: CheckCircle2,
-        color: 'from-secondary/20 to-secondary/5',
+        color: 'from-amber-200 via-orange-100 to-white text-amber-700 shadow-amber-200/60 ring-amber-200/60',
         tasks: ['Grammar improvement', 'Tone adjustment', 'Clarity enhancement', 'Plagiarism check']
     }
 ];
@@ -57,9 +57,9 @@ export function AITools() {
                             transition={{ duration: 0.6, delay: index * 0.1 }}
                             className="group"
                         >
-                            <div className="h-full bg-card rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/30">
-                                <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${tool.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 mx-auto`}>
-                                    <tool.icon className="w-8 h-8 text-primary" />
+                            <div className="h-full bg-card rounded-2xl p-6 shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300 border border-border hover:border-primary/30">
+                                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${tool.color} shadow-lg ring-1 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 mx-auto`}>
+                                    <tool.icon className="w-8 h-8 drop-shadow-sm" strokeWidth={2.2} />
                                 </div>
 
                                 <h3 className="text-xl text-center mb-4 text-foreground">
