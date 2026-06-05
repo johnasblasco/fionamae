@@ -130,34 +130,97 @@ export function Portfolio() {
                 </motion.div>
 
                 <div className="space-y-20">
-                    <div>
+                    <div id ='presentation-design'>
                         <h3 className="text-3xl font-serif text-foreground mb-8">
-                            Social Media Graphics
+                            Presentation Design
                         </h3>
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {socialMediaGraphics.map((item, index) => (
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-card via-accent/50 to-card p-6 md:p-8 shadow-sm"
+                        >
+                            <div className="relative min-h-[760px] lg:min-h-[430px]">
                                 <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    initial={{ opacity: 0 }}
+                                    whileInView={{ opacity: 1 }}
+                                    animate={{
+                                        x: isPresentationOpen ? '-122%' : '-50%',
+                                        y: '-50%'
+                                    }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    className="group relative aspect-[1.07/1] rounded-2xl overflow-hidden bg-card shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300 border border-border"
+                                    transition={{ duration: 0.55, ease: 'easeOut' }}
+                                    className="absolute left-1/2 top-[22%] z-20 min-h-[320px] w-full max-w-[430px] rounded-[2rem] border border-border bg-gradient-to-br from-white via-accent to-muted shadow-xl lg:top-1/2"
                                 >
-                                    <ImageWithFallback
-                                        src={item.url}
-                                        alt={item.title}
-                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                                        <p className="text-white">{item.title}</p>
+                                    <div className="absolute inset-x-8 top-8 h-16 rounded-t-[1.75rem] bg-primary/15"></div>
+                                    <div className="absolute inset-x-6 top-14 h-16 rounded-t-[1.75rem] bg-secondary/20"></div>
+                                    <div className="absolute inset-x-4 top-20 h-16 rounded-t-[1.75rem] bg-sky-100"></div>
+                                    <div className="absolute inset-x-2 bottom-0 top-28 rounded-[2rem] border border-border bg-card shadow-lg">
+                                        <div className="absolute left-1/2 top-0 h-12 w-24 -translate-x-1/2 rounded-b-full bg-gradient-to-b from-accent to-card"></div>
+                                        <div className="flex h-full flex-col items-center justify-center px-8 text-center">
+                                            <button
+                                                type="button"
+                                                onClick={togglePresentations}
+                                                aria-label={isPresentationOpen ? 'Close presentation cards' : 'Open presentation cards'}
+                                                className="group/folder mb-5 flex h-16 w-16 cursor-pointer items-center justify-center rounded-2xl bg-gradient-to-br from-primary/25 via-emerald-100 to-white text-primary shadow-lg ring-1 ring-primary/30 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+                                            >
+                                                <FolderOpen className="h-8 w-8" strokeWidth={2.2} />
+                                            </button>
+                                            <p className="text-sm uppercase tracking-[0.18em] text-muted-foreground">Presentation Design</p>
+                                            <p className="mt-2 font-serif text-2xl text-foreground">Focused slide decks</p>
+                                        </div>
                                     </div>
                                 </motion.div>
-                            ))}
-                        </div>
-                    </div>
 
-                    <div>
+                                <div className="absolute inset-x-0 bottom-0 min-h-[400px] lg:inset-y-0 lg:left-[50%] lg:right-0 lg:min-h-0">
+                                    <div className="grid gap-4 lg:block">
+                                        {presentations.map((item, index) => {
+                                            const isSelected = selectedPresentation === index;
+                                            const isVisible = isPresentationOpen && (selectedPresentation === null || isSelected);
+
+                                            return (
+                                                <motion.button
+                                                    key={item.title}
+                                                    type="button"
+                                                    onClick={() => selectPresentation(index)}
+                                                    initial={false}
+                                                    animate={{
+                                                        opacity: isVisible ? 1 : 0,
+                                                        x: isVisible ? 0 : -220,
+                                                        scale: isVisible ? 1 : 0.82,
+                                                        rotate: isVisible ? 0 : -4
+                                                    }}
+                                                    transition={{ duration: 0.45, delay: isVisible ? index * 0.06 : 0, ease: 'easeOut' }}
+                                                    className="group text-left lg:absolute lg:left-0 w-full lg:max-w-[520px] outline-none"
+                                                    style={{
+                                                        top: `${selectedPresentation === null ? index * 76 : 102}px`,
+                                                        zIndex: isVisible ? presentations.length + index + 20 : presentations.length + index,
+                                                        pointerEvents: isVisible ? 'auto' : 'none'
+                                                    }}
+                                                >
+                                                    <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-lg transition-all duration-300 group-hover:-translate-y-2 group-hover:translate-x-3 group-hover:shadow-2xl group-focus-visible:-translate-y-2 group-focus-visible:translate-x-3 group-focus-visible:shadow-2xl">
+                                                        <div className={`absolute left-0 top-0 h-full w-2 ${item.tab}`}></div>
+                                                        <div className="flex items-start gap-4">
+                                                            <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${item.color} shadow-lg ring-1 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 group-focus-visible:scale-110 group-focus-visible:rotate-3`}>
+                                                                <item.icon className="h-7 w-7 " strokeWidth={2.2} />
+                                                            </div>
+                                                            <div>
+                                                                <p className="mb-1 text-xs uppercase tracking-[0.18em] text-muted-foreground">{item.type}</p>
+                                                                <h4 className="text-xl text-foreground">{item.title}</h4>
+                                                                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </motion.button>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
+                    <div id='canva-template-editing'>
                         <h3 className="text-3xl font-serif text-foreground mb-8">
                             Canva Template Editing
                         </h3>
@@ -232,97 +295,34 @@ export function Portfolio() {
                             </div>
                         </motion.div>
                     </div>
-
-                    <div>
+                   <div id='social-media-graphics'>
                         <h3 className="text-3xl font-serif text-foreground mb-8">
-                            Presentation Design
+                            Social Media Graphics
                         </h3>
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
-                            className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-card via-accent/50 to-card p-6 md:p-8 shadow-sm"
-                        >
-                            <div className="relative min-h-[760px] lg:min-h-[430px]">
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {socialMediaGraphics.map((item, index) => (
                                 <motion.div
-                                    initial={{ opacity: 0 }}
-                                    whileInView={{ opacity: 1 }}
-                                    animate={{
-                                        x: isPresentationOpen ? '-122%' : '-50%',
-                                        y: '-50%'
-                                    }}
+                                    key={index}
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.55, ease: 'easeOut' }}
-                                    className="absolute left-1/2 top-[22%] z-20 min-h-[320px] w-full max-w-[430px] rounded-[2rem] border border-border bg-gradient-to-br from-white via-accent to-muted shadow-xl lg:top-1/2"
+                                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                                    className="group relative aspect-[1.07/1] rounded-2xl overflow-hidden bg-card shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300 border border-border"
                                 >
-                                    <div className="absolute inset-x-8 top-8 h-16 rounded-t-[1.75rem] bg-primary/15"></div>
-                                    <div className="absolute inset-x-6 top-14 h-16 rounded-t-[1.75rem] bg-secondary/20"></div>
-                                    <div className="absolute inset-x-4 top-20 h-16 rounded-t-[1.75rem] bg-sky-100"></div>
-                                    <div className="absolute inset-x-2 bottom-0 top-28 rounded-[2rem] border border-border bg-card shadow-lg">
-                                        <div className="absolute left-1/2 top-0 h-12 w-24 -translate-x-1/2 rounded-b-full bg-gradient-to-b from-accent to-card"></div>
-                                        <div className="flex h-full flex-col items-center justify-center px-8 text-center">
-                                            <button
-                                                type="button"
-                                                onClick={togglePresentations}
-                                                aria-label={isPresentationOpen ? 'Close presentation cards' : 'Open presentation cards'}
-                                                className="group/folder mb-5 flex h-16 w-16 cursor-pointer items-center justify-center rounded-2xl bg-gradient-to-br from-primary/25 via-emerald-100 to-white text-primary shadow-lg ring-1 ring-primary/30 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
-                                            >
-                                                <FolderOpen className="h-8 w-8" strokeWidth={2.2} />
-                                            </button>
-                                            <p className="text-sm uppercase tracking-[0.18em] text-muted-foreground">Presentation Design</p>
-                                            <p className="mt-2 font-serif text-2xl text-foreground">Focused slide decks</p>
-                                        </div>
+                                    <ImageWithFallback
+                                        src={item.url}
+                                        alt={item.title}
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                                        <p className="text-white">{item.title}</p>
                                     </div>
                                 </motion.div>
-
-                                <div className="absolute inset-x-0 bottom-0 min-h-[400px] lg:inset-y-0 lg:left-[50%] lg:right-0 lg:min-h-0">
-                                    <div className="grid gap-4 lg:block">
-                                        {presentations.map((item, index) => {
-                                            const isSelected = selectedPresentation === index;
-                                            const isVisible = isPresentationOpen && (selectedPresentation === null || isSelected);
-
-                                            return (
-                                                <motion.button
-                                                    key={item.title}
-                                                    type="button"
-                                                    onClick={() => selectPresentation(index)}
-                                                    initial={false}
-                                                    animate={{
-                                                        opacity: isVisible ? 1 : 0,
-                                                        x: isVisible ? 0 : -220,
-                                                        scale: isVisible ? 1 : 0.82,
-                                                        rotate: isVisible ? 0 : -4
-                                                    }}
-                                                    transition={{ duration: 0.45, delay: isVisible ? index * 0.06 : 0, ease: 'easeOut' }}
-                                                    className="group text-left lg:absolute lg:left-0 w-full lg:max-w-[520px] outline-none"
-                                                    style={{
-                                                        top: `${selectedPresentation === null ? index * 76 : 102}px`,
-                                                        zIndex: isVisible ? presentations.length + index + 20 : presentations.length + index,
-                                                        pointerEvents: isVisible ? 'auto' : 'none'
-                                                    }}
-                                                >
-                                                    <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-lg transition-all duration-300 group-hover:-translate-y-2 group-hover:translate-x-3 group-hover:shadow-2xl group-focus-visible:-translate-y-2 group-focus-visible:translate-x-3 group-focus-visible:shadow-2xl">
-                                                        <div className={`absolute left-0 top-0 h-full w-2 ${item.tab}`}></div>
-                                                        <div className="flex items-start gap-4">
-                                                            <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${item.color} shadow-lg ring-1 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 group-focus-visible:scale-110 group-focus-visible:rotate-3`}>
-                                                                <item.icon className="h-7 w-7 drop-shadow-sm" strokeWidth={2.2} />
-                                                            </div>
-                                                            <div>
-                                                                <p className="mb-1 text-xs uppercase tracking-[0.18em] text-muted-foreground">{item.type}</p>
-                                                                <h4 className="text-xl text-foreground">{item.title}</h4>
-                                                                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </motion.button>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
+                            ))}
+                        </div>
                     </div>
+
+ 
                 </div>
             </div>
         </section>

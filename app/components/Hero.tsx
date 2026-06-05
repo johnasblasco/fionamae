@@ -96,15 +96,16 @@ export function Hero() {
                         transition={{ duration: 0.8, delay: 0.2 }}
                         className="relative"
                     >
+                        {/* Image container – overlay removed so photo stays clear */}
                         <div className="relative aspect-square rounded-3xl overflow-hidden bg-accent">
                             <ImageWithFallback
-                                src="/hero.png"
+                                src="/hero.jpg"
                                 alt="Fiona Mae Santos - Professional Virtual Assistant"
                                 className="w-full h-full object-cover"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent"></div>
                         </div>
 
+                        {/* Decorative blurs – keep them but they don't affect image clarity */}
                         <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-secondary rounded-full blur-3xl opacity-30"></div>
                         <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary rounded-full blur-3xl opacity-30"></div>
                     </motion.div>
