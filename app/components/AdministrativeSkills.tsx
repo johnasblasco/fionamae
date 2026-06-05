@@ -80,7 +80,7 @@ const SoftPieGauge = ({ percentage, gradient, colorStart, colorEnd, skillName }:
           cy={center}
           r={radius + 10}
           fill="none"
-          stroke="#334155"
+          className="stroke-gray-300 dark:stroke-slate-700"
           strokeWidth="1.2"
           strokeDasharray="3 3"
         />
@@ -90,7 +90,7 @@ const SoftPieGauge = ({ percentage, gradient, colorStart, colorEnd, skillName }:
           cx={center}
           cy={center}
           r={radius}
-          fill="#1e293b"
+          className="fill-gray-100 dark:fill-slate-800"
           filter="url(#pieShadow)"
         />
         
@@ -117,9 +117,9 @@ const SoftPieGauge = ({ percentage, gradient, colorStart, colorEnd, skillName }:
         {/* Center text – white for dark background */}
         <foreignObject x={center - 70} y={center - 36} width="140" height="72">
           <div className="flex flex-col items-center justify-center w-full h-full text-center">
-            <p className="text-[10px] font-medium uppercase tracking-wider text-slate-400">mastery</p>
-            <p className="text-2xl font-bold text-white">{percentage}%</p>
-            <p className="text-[11px] font-medium text-slate-300 mt-0.5 line-clamp-2 px-1">{skillName}</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400 dark:text-slate-400">mastery</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">{percentage}%</p>
+            <p className="text-[11px] font-medium text-gray-500 dark:text-slate-300 mt-0.5 line-clamp-2 px-1">{skillName}</p>
           </div>
         </foreignObject>
       </svg>
@@ -132,7 +132,7 @@ export function AdministrativeSkills() {
 
   return (
     // Solid black background – exactly as requested
-    <section className="py-20 px-6 bg-black">
+    <section className="py-20 px-6 bg-white dark:bg-black">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
@@ -141,10 +141,10 @@ export function AdministrativeSkills() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="font-serif text-3xl md:text-4xl text-white mb-2 tracking-tight">
+          <h2 className="font-serif text-3xl md:text-4xl text-gray-900 dark:text-white mb-2 tracking-tight">
             Administrative Skills
           </h2>
-          <p className="text-sm text-slate-300 max-w-md mx-auto">
+          <p className="text-sm text-gray-500 dark:text-slate-300 max-w-md mx-auto">
             Core competencies mastered with precision
           </p>
         </motion.div>
@@ -188,8 +188,8 @@ export function AdministrativeSkills() {
                   className={`
                     group flex items-center gap-3 p-2.5 rounded-xl text-left transition-all duration-200
                     ${selectedSkill.name === skill.name
-                      ? 'bg-slate-800 shadow-md ring-1 ring-slate-700'
-                      : 'hover:bg-slate-900 hover:shadow-sm'
+                      ? 'bg-gray-100 dark:bg-slate-800 shadow-md ring-1 ring-gray-300 dark:ring-slate-700'
+                      : 'hover:bg-gray-50 dark:hover:bg-slate-900 hover:shadow-sm'
                     }
                   `}
                 >
@@ -201,12 +201,12 @@ export function AdministrativeSkills() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-baseline mb-1">
-                      <p className="text-xs font-semibold text-slate-200 truncate">{skill.name}</p>
-                      <span className="text-[11px] font-bold text-slate-400">
+                      <p className="text-xs font-semibold text-gray-700 dark:text-slate-200 truncate">{skill.name}</p>
+                      <span className="text-[11px] font-bold text-gray-400 dark:text-slate-400">
                         {skill.percentage}%
                       </span>
                     </div>
-                    <div className="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
+                    <div className="w-full h-1.5 rounded-full bg-gray-200 dark:bg-slate-800 overflow-hidden">
                       <motion.div
                         className={`h-full rounded-full bg-gradient-to-r ${skill.gradient}`}
                         initial={{ width: 0 }}
@@ -219,7 +219,7 @@ export function AdministrativeSkills() {
               ))}
             </motion.div>
 
-            <p className="text-[11px] text-center text-slate-500 mt-6 pt-2 border-t border-slate-800">
+            <p className="text-[11px] text-center text-gray-500 dark:text-slate-500 mt-6 pt-2 border-t border-gray-200 dark:border-slate-800">
               ✦ Each skill stands alone — independent proficiency levels ✦
             </p>
           </div>

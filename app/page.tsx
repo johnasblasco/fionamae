@@ -19,10 +19,11 @@ export default function App() {
       <main>
         <Hero />
         <Services />
+
+        <AdministrativeSkills />
         <Portfolio />
         <About />
         <AITools />
-        <AdministrativeSkills />
         <WhyWorkWithMe />
         <Testimonials />
         <Contact />
