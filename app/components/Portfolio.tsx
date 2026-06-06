@@ -132,7 +132,7 @@ export function Portfolio() {
 
     return (
         <section id="portfolio" className="py-24 px-4">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-6xl mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -242,7 +242,7 @@ export function Portfolio() {
 
                     {/* Canva Template Editing – now right‑aligned, not centered */}
                     <div id="canva-template-editing">
-                        <div className="grid md:grid-cols-2 gap-12 items-center">
+                        <div className="grid md:grid-cols-2 gap-12 items-center max-w-4xl mx-auto">
                             {/* Left: description */}
                             <motion.div
                                 initial={{ opacity: 0, x: -30 }}
@@ -253,10 +253,37 @@ export function Portfolio() {
                                 <h3 className="text-3xl font-serif text-foreground mb-6">
                                     Canva Template Editing
                                 </h3>
-                                <p className="text-muted-foreground mb-6">
-                                    Transform your Canva templates with professional edits:
-                                    replace text, swap images, and apply brand colors seamlessly.
-                                </p>
+                               <div className="space-y-4 mb-6">
+    <p className="text-muted-foreground">
+        Transform any Canva template into a custom-branded asset.
+    </p>
+    <p className="text-muted-foreground font-medium">
+        My editing process includes:
+    </p>
+    <ul className="space-y-2 text-muted-foreground">
+        <li className="flex items-start gap-2">
+            <span className="text-primary mt-1">•</span>
+            <span>
+                <strong>Text replacement & customization</strong> – Adapt headlines, body copy, and calls-to-action to match your brand voice.
+            </span>
+        </li>
+        <li className="flex items-start gap-2">
+            <span className="text-primary mt-1">•</span>
+            <span>
+                <strong>Image replacement & positioning</strong> – Swap stock visuals with your own product or lifestyle photos, cropped and placed perfectly.
+            </span>
+        </li>
+        <li className="flex items-start gap-2">
+            <span className="text-primary mt-1">•</span>
+            <span>
+                <strong>Brand color application</strong> – Instantly apply your brand palette to backgrounds, shapes, and text elements for consistent identity.
+            </span>
+        </li>
+    </ul>
+    <p className="text-muted-foreground">
+        Whether it's a social post, flyer, or presentation, I ensure every template feels uniquely yours.
+    </p>
+</div>
                                 <ul className="space-y-3 text-muted-foreground">
                                     <li className="flex items-center gap-2">
                                         <span className="w-3 h-3 rounded-full bg-primary" />
