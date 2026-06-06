@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { motion } from 'motion/react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import {
@@ -40,8 +40,8 @@ const socialMediaGraphics = [
 
 const templateExamples = [
     {
-        before: 'https://images.unsplash.com/photo-1601642964568-1917224f4e4d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwyfHxtaW5pbWFsaXN0JTIwb2ZmaWNlJTIwYWVzdGhldGljJTIwYmVpZ2V8ZW58MXx8fHwxNzgwNDU3Njg1fDA&ixlib=rb-4.1.0&q=80&w=1080',
-        after: 'https://images.unsplash.com/photo-1719760518176-e124a5bcd025?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwzfHxtaW5pbWFsaXN0JTIwb2ZmaWNlJTIwYWVzdGhldGljJTIwYmVpZ2V8ZW58MXx8fHwxNzgwNDU3Njg1fDA&ixlib=rb-4.1.0&q=80&w=1080',
+        before: '/coffee-sale-after.jpg',   // replace with your actual before image
+        after: '/coffee-sale-before.jpg',   // replace with your actual after image
         title: 'Brand Template Customization'
     }
 ];
@@ -82,18 +82,38 @@ const presentations = [
 ];
 
 export function Portfolio() {
+    // Slider state
     const [sliderPosition, setSliderPosition] = useState(50);
     const [isDragging, setIsDragging] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    const handleMove = useCallback((clientX: number) => {
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        let x = clientX - rect.left;
+        x = Math.min(Math.max(x, 0), rect.width);
+        const percent = (x / rect.width) * 100;
+        setSliderPosition(percent);
+    }, []);
+
+    const onMouseMove = useCallback((e: React.MouseEvent) => {
+        if (!isDragging) return;
+        handleMove(e.clientX);
+    }, [isDragging, handleMove]);
+
+    const onTouchMove = useCallback((e: React.TouchEvent) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        if (touch) handleMove(touch.clientX);
+    }, [isDragging, handleMove]);
+
+    const startDrag = () => setIsDragging(true);
+    const stopDrag = () => setIsDragging(false);
+
+    // Presentation design state
     const [isPresentationOpen, setIsPresentationOpen] = useState(false);
     const [selectedPresentation, setSelectedPresentation] = useState<number | null>(null);
-
-    const handleSliderChange = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!isDragging) return;
-        const rect = e.currentTarget.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const percentage = (x / rect.width) * 100;
-        setSliderPosition(Math.min(Math.max(percentage, 0), 100));
-    };
 
     const togglePresentations = () => {
         setIsPresentationOpen((isOpen) => !isOpen);
@@ -106,14 +126,13 @@ export function Portfolio() {
             setSelectedPresentation(null);
             return;
         }
-
         setIsPresentationOpen(true);
         setSelectedPresentation(index);
     };
 
     return (
         <section id="portfolio" className="py-24 px-4">
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-4xl mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -130,7 +149,8 @@ export function Portfolio() {
                 </motion.div>
 
                 <div className="space-y-20">
-                    <div id ='presentation-design'>
+                    {/* Presentation Design (unchanged) */}
+                    <div id="presentation-design">
                         <h3 className="text-3xl font-serif text-foreground mb-8">
                             Presentation Design
                         </h3>
@@ -178,7 +198,6 @@ export function Portfolio() {
                                         {presentations.map((item, index) => {
                                             const isSelected = selectedPresentation === index;
                                             const isVisible = isPresentationOpen && (selectedPresentation === null || isSelected);
-
                                             return (
                                                 <motion.button
                                                     key={item.title}
@@ -203,7 +222,7 @@ export function Portfolio() {
                                                         <div className={`absolute left-0 top-0 h-full w-2 ${item.tab}`}></div>
                                                         <div className="flex items-start gap-4">
                                                             <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${item.color} shadow-lg ring-1 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 group-focus-visible:scale-110 group-focus-visible:rotate-3`}>
-                                                                <item.icon className="h-7 w-7 " strokeWidth={2.2} />
+                                                                <item.icon className="h-7 w-7" strokeWidth={2.2} />
                                                             </div>
                                                             <div>
                                                                 <p className="mb-1 text-xs uppercase tracking-[0.18em] text-muted-foreground">{item.type}</p>
@@ -220,82 +239,103 @@ export function Portfolio() {
                             </div>
                         </motion.div>
                     </div>
-                    <div id='canva-template-editing'>
-                        <h3 className="text-3xl font-serif text-foreground mb-8">
-                            Canva Template Editing
-                        </h3>
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
-                            className="max-w-4xl mx-auto"
-                        >
-                            <div
-                                className="relative aspect-video rounded-2xl overflow-hidden bg-accent select-none cursor-ew-resize"
-                                onMouseMove={handleSliderChange}
-                                onMouseDown={() => setIsDragging(true)}
-                                onMouseUp={() => setIsDragging(false)}
-                                onMouseLeave={() => setIsDragging(false)}
+
+                    {/* Canva Template Editing – now right‑aligned, not centered */}
+                    <div id="canva-template-editing">
+                        <div className="grid md:grid-cols-2 gap-12 items-center">
+                            {/* Left: description */}
+                            <motion.div
+                                initial={{ opacity: 0, x: -30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6 }}
                             >
-                                <ImageWithFallback
-                                    src={templateExamples[0].before}
-                                    alt="Before"
-                                    className="absolute inset-0 w-full h-full object-cover"
-                                />
+                                <h3 className="text-3xl font-serif text-foreground mb-6">
+                                    Canva Template Editing
+                                </h3>
+                                <p className="text-muted-foreground mb-6">
+                                    Transform your Canva templates with professional edits:
+                                    replace text, swap images, and apply brand colors seamlessly.
+                                </p>
+                                <ul className="space-y-3 text-muted-foreground">
+                                    <li className="flex items-center gap-2">
+                                        <span className="w-3 h-3 rounded-full bg-primary" />
+                                        <span>Text replacement & customization</span>
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="w-3 h-3 rounded-full bg-secondary" />
+                                        <span>Image replacement & positioning</span>
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="w-3 h-3 rounded-full bg-primary" />
+                                        <span>Brand color application</span>
+                                    </li>
+                                </ul>
+                            </motion.div>
 
-                                <div
-                                    className="absolute inset-0 overflow-hidden"
-                                    style={{ width: `${sliderPosition}%` }}
-                                >
-                                    <ImageWithFallback
-                                        src={templateExamples[0].after}
-                                        alt="After"
-                                        className="absolute inset-0 w-full h-full object-cover"
-                                        style={{ width: `${(100 / sliderPosition) * 100}%` }}
-                                    />
-                                </div>
-
-                                <div
-                                    className="absolute top-0 bottom-0 w-1 bg-white shadow-lg cursor-ew-resize"
-                                    style={{ left: `${sliderPosition}%` }}
-                                >
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center">
-                                        <ChevronLeft className="w-3 h-3 absolute left-1" />
-                                        <ChevronRight className="w-3 h-3 absolute right-1" />
+                            {/* Right: portrait slider – right‑aligned (no centering) */}
+                            <motion.div
+                                initial={{ opacity: 0, x: 30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: 0.2 }}
+                                className="flex justify-end"   // ← changed from justify-center to justify-end
+                            >
+                                <div className="w-full max-w-lg">
+                                    <div
+                                        ref={containerRef}
+                                        className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-accent select-none touch-none cursor-ew-resize"
+                                        onMouseMove={onMouseMove}
+                                        onMouseDown={startDrag}
+                                        onMouseUp={stopDrag}
+                                        onMouseLeave={stopDrag}
+                                        onTouchMove={onTouchMove}
+                                        onTouchStart={startDrag}
+                                        onTouchEnd={stopDrag}
+                                    >
+                                        <ImageWithFallback
+                                            src={templateExamples[0].before}
+                                            alt="Before"
+                                            className="absolute inset-0 w-full h-full object-fit"
+                                        />
+                                        <div
+                                            className="absolute inset-0 overflow-hidden"
+                                            style={{ width: `${sliderPosition}%` }}
+                                        >
+                                            <ImageWithFallback
+                                                src={templateExamples[0].after}
+                                                alt="After"
+                                                className="absolute inset-0 w-full h-full object-fit"
+                                            />
+                                        </div>
+                                        <div
+                                            className="absolute top-0 bottom-0 w-1 bg-white shadow-lg cursor-ew-resize"
+                                            style={{ left: `${sliderPosition}%` }}
+                                        >
+                                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center">
+                                                <ChevronLeft className="w-3 h-3 absolute left-1" />
+                                                <ChevronRight className="w-3 h-3 absolute right-1" />
+                                            </div>
+                                        </div>
+                                        <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                                            Before
+                                        </div>
+                                        <div className="absolute top-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                                            After
+                                        </div>
+                                    </div>
+                                    <div className="mt-6 text-center">
+                                        <p className="text-muted-foreground text-sm">
+                                            Drag the slider to see the transformation
+                                        </p>
                                     </div>
                                 </div>
-
-                                <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
-                                    Before
-                                </div>
-                                <div className="absolute top-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
-                                    After
-                                </div>
-                            </div>
-
-                            <div className="mt-6 text-center">
-                                <p className="text-muted-foreground">
-                                    Drag the slider to see the transformation
-                                </p>
-                                <div className="mt-4 flex flex-wrap justify-center gap-4 text-sm">
-                                    <span className="flex items-center gap-2">
-                                        <span className="w-3 h-3 rounded-full bg-primary"></span>
-                                        Text replacement
-                                    </span>
-                                    <span className="flex items-center gap-2">
-                                        <span className="w-3 h-3 rounded-full bg-secondary"></span>
-                                        Image replacement
-                                    </span>
-                                    <span className="flex items-center gap-2">
-                                        <span className="w-3 h-3 rounded-full bg-primary"></span>
-                                        Brand color application
-                                    </span>
-                                </div>
-                            </div>
-                        </motion.div>
+                            </motion.div>
+                        </div>
                     </div>
-                   <div id='social-media-graphics'>
+
+                    {/* Social Media Graphics (unchanged) */}
+                    <div id="social-media-graphics">
                         <h3 className="text-3xl font-serif text-foreground mb-8">
                             Social Media Graphics
                         </h3>
@@ -321,8 +361,6 @@ export function Portfolio() {
                             ))}
                         </div>
                     </div>
-
- 
                 </div>
             </div>
         </section>

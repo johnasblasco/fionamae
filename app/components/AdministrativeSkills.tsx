@@ -132,7 +132,7 @@ export function AdministrativeSkills() {
 
   return (
     // Solid black background – exactly as requested
-    <section className="py-20 px-6 bg-white dark:bg-black">
+    <section className="py-20 px-6">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
